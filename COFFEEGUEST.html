@@ -1,0 +1,2481 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Guest — кав'ярня з історією</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ============================================
+           COFFEE GUEST — кав'ярня з історією
+           Темно-сірий стиль з теплим освітленням
+           ============================================ */
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Color Palette - Dark Gray with Warm Glow */
+            --color-dark-gray-1: #2E2E2E;
+            --color-dark-gray-2: #3A3A3A;
+            --color-graphite: #1C1C1C;
+            --color-light-gray: #D3D3D3;
+            --color-white: #FFFFFF;
+            --color-warm-glow: rgba(255, 235, 180, 0.6);
+            --color-warm-glow-strong: rgba(255, 220, 150, 0.8);
+            --color-coffee: #6F4E37;
+            --color-coffee-light: #8B6B4F;
+            --color-success: #4CAF50;
+            
+            /* Typography */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-display: 'Playfair Display', serif;
+            
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+            
+            /* Transitions */
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--color-light-gray);
+            background-color: var(--color-graphite);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* ============================================
+           Navigation
+           ============================================ */
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(28, 28, 28, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: var(--spacing-sm) 0;
+            transition: var(--transition-smooth);
+            border-bottom: 1px solid rgba(211, 211, 211, 0.1);
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(28, 28, 28, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--color-white);
+            text-shadow: 0 0 10px var(--color-warm-glow);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-md);
+        }
+
+        .nav-menu a {
+            color: var(--color-light-gray);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            padding: var(--spacing-xs) 0;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--color-white);
+            box-shadow: 0 0 8px var(--color-warm-glow);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-menu a:hover {
+            color: var(--color-white);
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--color-white);
+            transition: var(--transition-smooth);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 60px);
+                background-color: var(--color-graphite);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: var(--spacing-lg);
+                transition: var(--transition-smooth);
+                border-top: 1px solid rgba(211, 211, 211, 0.1);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+        }
+
+        /* ============================================
+           Shopping Cart
+           ============================================ */
+
+        .cart-container {
+            position: relative;
+            margin-left: var(--spacing-md);
+        }
+
+        .cart-icon {
+            position: relative;
+            background: transparent;
+            border: none;
+            color: var(--color-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-icon:hover {
+            color: var(--color-warm-glow);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--color-warm-glow-strong);
+            color: var(--color-graphite);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            box-shadow: 0 0 10px var(--color-warm-glow);
+        }
+
+        .cart-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 350px;
+            background: var(--color-dark-gray-2);
+            border: 1px solid rgba(211, 211, 211, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition-smooth);
+            margin-top: 10px;
+        }
+
+        .cart-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .cart-header {
+            padding: var(--spacing-sm);
+            border-bottom: 1px solid rgba(211, 211, 211, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            color: var(--color-white);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .close-cart {
+            background: transparent;
+            border: none;
+            color: var(--color-light-gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .close-cart:hover {
+            color: var(--color-white);
+        }
+
+        .cart-items {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: var(--spacing-sm);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid rgba(211, 211, 211, 0.05);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+            margin-right: var(--spacing-sm);
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            color: var(--color-white);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-price {
+            color: var(--color-light-gray);
+            font-size: 0.9rem;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--color-light-gray);
+            background: transparent;
+            color: var(--color-light-gray);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .quantity-btn:hover {
+            border-color: var(--color-white);
+            color: var(--color-white);
+        }
+
+        .cart-item-quantity {
+            min-width: 30px;
+            text-align: center;
+            color: var(--color-white);
+            font-weight: 500;
+        }
+
+        .remove-item {
+            background: transparent;
+            border: none;
+            color: var(--color-light-gray);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            padding: 4px;
+        }
+
+        .remove-item:hover {
+            color: #ff6b6b;
+        }
+
+        .cart-footer {
+            padding: var(--spacing-sm);
+            border-top: 1px solid rgba(211, 211, 211, 0.1);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .cart-total span {
+            color: var(--color-white);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--color-warm-glow);
+            border: none;
+            border-radius: 6px;
+            color: var(--color-graphite);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .checkout-btn:hover {
+            background: var(--color-warm-glow-strong);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 220, 150, 0.3);
+        }
+
+        .empty-cart {
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--color-light-gray);
+        }
+
+        .empty-cart i {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-sm);
+            opacity: 0.5;
+        }
+
+        /* ============================================
+           Hero Section
+           ============================================ */
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--color-graphite) 0%, var(--color-dark-gray-1) 50%, var(--color-dark-gray-2) 100%);
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 235, 180, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 220, 150, 0.08) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+
+        .hero-title {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .title-main {
+            display: block;
+            font-size: 4rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+            color: var(--color-white);
+            text-shadow: 
+                0 0 20px var(--color-warm-glow),
+                0 0 40px var(--color-warm-glow-strong);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .title-sub {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            color: var(--color-light-gray);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--color-light-gray);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: 1px solid var(--color-white);
+            background: transparent;
+            color: var(--color-white);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .btn:hover {
+            box-shadow: 
+                0 0 20px var(--color-warm-glow),
+                inset 0 0 20px rgba(255, 235, 180, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--color-white);
+        }
+
+        .btn-secondary {
+            border-color: var(--color-light-gray);
+            color: var(--color-light-gray);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+
+        .mouse {
+            width: 24px;
+            height: 40px;
+            border: 2px solid var(--color-white);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .mouse::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--color-white);
+            border-radius: 2px;
+            animation: scroll 1.5s infinite;
+        }
+
+        @keyframes scroll {
+            0% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(12px);
+            }
+        }
+
+        /* ============================================
+           Branded Animation Section
+           ============================================ */
+
+        .branded-animation-section {
+            position: relative;
+            padding: var(--spacing-xl) 0;
+            background-color: var(--color-graphite);
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .animation-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .coffee-animation-svg {
+            width: 100%;
+            height: 100%;
+            max-width: 400px;
+            max-height: 500px;
+            filter: drop-shadow(0 0 10px rgba(255, 235, 180, 0.3));
+        }
+
+        .animation-glow {
+            position: absolute;
+            top: 50%;
+            /* Use the custom property with default value of 0px */
+            left: calc(50% + var(--glow-offset, 0px));
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--color-warm-glow) 0%, transparent 70%);
+            opacity: 0.3;
+            filter: blur(40px);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                opacity: 0.2;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        /* Cup elements - initially hidden */
+        .coffee-cup {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .steam-line {
+            opacity: 0;
+        }
+
+        .coffee-guest-text-steam {
+            opacity: 0;
+        }
+
+        /* ============================================
+           Menu Section - FIXED MOBILE LAYOUT
+           ============================================ */
+
+        .menu-section {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--color-dark-gray-1);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--color-white);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            text-shadow: 0 0 15px var(--color-warm-glow);
+        }
+
+        /* Default desktop layout */
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .menu-tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: 1px solid var(--color-light-gray);
+            color: var(--color-light-gray);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-family: var(--font-primary);
+        }
+
+        .menu-tab:hover {
+            border-color: var(--color-white);
+            color: var(--color-white);
+            box-shadow: 0 0 15px var(--color-warm-glow);
+        }
+
+        .menu-tab.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--color-white);
+            color: var(--color-white);
+            box-shadow: 0 0 15px var(--color-warm-glow);
+        }
+
+        /* Mobile layout - ALWAYS 2 ROWS */
+        @media screen and (max-width: 768px) {
+            .menu-tabs {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                gap: 10px;
+                padding: 0 10px;
+            }
+            
+            .menu-tab {
+                width: 100%;
+                padding: 12px 8px;
+                font-size: 0.75rem;
+                text-align: center;
+                min-height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* Specific positioning for 5 tabs in 2 rows */
+            .menu-tab:nth-child(1) { grid-column: 1; grid-row: 1; }
+            .menu-tab:nth-child(2) { grid-column: 2; grid-row: 1; }
+            .menu-tab:nth-child(3) { grid-column: 3; grid-row: 1; }
+            .menu-tab:nth-child(4) { grid-column: 1; grid-row: 2; }
+            .menu-tab:nth-child(5) { grid-column: 2; grid-row: 2; }
+        }
+
+        /* Very small screens - still 2 rows but with smaller font */
+        @media screen and (max-width: 480px) {
+            .menu-tabs {
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                gap: 8px;
+            }
+            
+            .menu-tab {
+                font-size: 0.7rem;
+                padding: 10px 6px;
+                min-height: 45px;
+            }
+        }
+
+        /* Extra small screens - still 2 rows */
+        @media screen and (max-width: 360px) {
+            .menu-tabs {
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                gap: 6px;
+            }
+            
+            .menu-tab {
+                font-size: 0.65rem;
+                padding: 8px 4px;
+                min-height: 40px;
+            }
+        }
+
+        .menu-category {
+            display: none;
+        }
+
+        .menu-category.active {
+            display: block;
+        }
+
+        /* Desktop layout - 3 columns */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+        
+        /* Mobile layout - 2 columns */
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: var(--spacing-sm);
+                padding: 0 10px;
+            }
+        }
+
+        /* Small mobile layout - 1 column */
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-sm);
+                padding: 0 10px;
+            }
+        }
+
+        .menu-card {
+            background-color: var(--color-dark-gray-2);
+            border: 1px solid rgba(211, 211, 211, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                0 0 20px var(--color-warm-glow);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .menu-card-image {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Mobile adjustments for menu card image */
+        @media (max-width: 768px) {
+            .menu-card-image {
+                height: 140px;
+            }
+        }
+
+        .menu-card-content {
+            padding: var(--spacing-md);
+        }
+
+        /* Mobile adjustments for menu card content */
+        @media (max-width: 768px) {
+            .menu-card-content {
+                padding: var(--spacing-sm);
+            }
+        }
+
+        .menu-item-name {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--color-white);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        /* Mobile adjustments for menu item name */
+        @media (max-width: 768px) {
+            .menu-item-name {
+                font-size: 1rem;
+            }
+        }
+
+        .menu-item-description {
+            font-size: 0.9rem;
+            color: var(--color-light-gray);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.5;
+        }
+
+        /* Mobile adjustments for menu item description */
+        @media (max-width: 768px) {
+            .menu-item-description {
+                font-size: 0.8rem;
+                margin-bottom: var(--spacing-xs);
+            }
+        }
+
+        .menu-item-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-white);
+            display: block;
+            text-shadow: 0 0 10px var(--color-warm-glow);
+        }
+
+        /* Mobile adjustments for menu item price */
+        @media (max-width: 768px) {
+            .menu-item-price {
+                font-size: 1rem;
+            }
+        }
+
+        .add-to-cart-btn {
+            margin-top: var(--spacing-sm);
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--color-white);
+            color: var(--color-white);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-family: var(--font-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-to-cart-btn:hover {
+            background: var(--color-warm-glow);
+            color: var(--color-graphite);
+            box-shadow: 0 0 15px var(--color-warm-glow);
+        }
+
+        /* Mobile adjustments for add to cart button */
+        @media (max-width: 768px) {
+            .add-to-cart-btn {
+                padding: 8px;
+                font-size: 0.8rem;
+                gap: 4px;
+            }
+        }
+
+        /* ============================================
+           Offers Section - IMPROVED ANIMATIONS
+           ============================================ */
+
+        .offers-section {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--color-graphite);
+        }
+
+        .offers-slider {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto var(--spacing-md);
+            height: 400px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .offer-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-dark-gray-2) 0%, var(--color-graphite) 100%);
+            border: 1px solid rgba(211, 211, 211, 0.1);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: translateX(100%) scale(0.9);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .offer-card.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            z-index: 2;
+        }
+
+        .offer-card.previous {
+            transform: translateX(-100%) scale(0.9);
+            opacity: 0;
+        }
+
+        .offer-card.next {
+            transform: translateX(100%) scale(0.9);
+            opacity: 0;
+        }
+
+        .offer-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--color-white);
+            color: var(--color-white);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: var(--spacing-md);
+            box-shadow: 0 0 15px var(--color-warm-glow);
+            border-radius: 20px;
+            transform: translateY(-20px);
+            opacity: 0;
+            animation: badgeSlideIn 0.6s ease-out 0.3s forwards;
+        }
+
+        @keyframes badgeSlideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .offer-title {
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: var(--color-white);
+            margin-bottom: var(--spacing-sm);
+            text-shadow: 0 0 15px var(--color-warm-glow);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: titleSlideIn 0.6s ease-out 0.5s forwards;
+        }
+
+        @keyframes titleSlideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .offer-description {
+            font-size: 1.1rem;
+            color: var(--color-light-gray);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+            max-width: 500px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: descriptionSlideIn 0.6s ease-out 0.7s forwards;
+        }
+
+        @keyframes descriptionSlideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .offer-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: priceSlideIn 0.6s ease-out 0.9s forwards;
+        }
+
+        @keyframes priceSlideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .old-price {
+            font-size: 1.3rem;
+            color: var(--color-light-gray);
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        .new-price {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--color-white);
+            text-shadow: 0 0 15px var(--color-warm-glow);
+        }
+
+        .offers-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .offer-nav-btn {
+            width: 50px;
+            height: 50px;
+            border: 1px solid var(--color-white);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .offer-nav-btn:hover {
+            box-shadow: 0 0 20px var(--color-warm-glow);
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .offer-dots {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid var(--color-white);
+            background: transparent;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .dot.active,
+        .dot:hover {
+            background: var(--color-white);
+            box-shadow: 0 0 10px var(--color-warm-glow);
+            transform: scale(1.2);
+        }
+
+        /* ============================================
+           About Section - IMPROVED MOBILE LAYOUT
+           ============================================ */
+
+        .about-section {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--color-dark-gray-1);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .about-text {
+            padding: var(--spacing-md);
+        }
+
+        .about-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--color-light-gray);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .about-description strong {
+            color: var(--color-white);
+            font-weight: 500;
+        }
+
+        .about-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-sm);
+        }
+
+        .about-image {
+            height: 250px;
+            background: linear-gradient(135deg, var(--color-dark-gray-2) 0%, var(--color-graphite) 100%);
+            border: 1px solid rgba(211, 211, 211, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--color-warm-glow) 0%, transparent 70%);
+            opacity: 0.2;
+        }
+
+        /* Improved mobile layout for about section */
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+            
+            .about-text {
+                padding: var(--spacing-sm);
+                text-align: center;
+                order: 1;
+            }
+            
+            .about-images {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-sm);
+                order: 2;
+            }
+            
+            .about-image {
+                height: 200px;
+                width: 100%;
+            }
+            
+            .about-description {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-image {
+                height: 150px;
+            }
+        }
+
+        /* ============================================
+           Contacts Section
+           ============================================ */
+
+        .contacts-section {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--color-graphite);
+        }
+
+        .contacts-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .contacts-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .contact-item {
+            padding: var(--spacing-md);
+            background-color: var(--color-dark-gray-2);
+            border: 1px solid rgba(211, 211, 211, 0.1);
+            border-radius: 4px;
+        }
+
+        .contact-item h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--color-white);
+            margin-bottom: var(--spacing-xs);
+            text-shadow: 0 0 10px var(--color-warm-glow);
+        }
+
+        .contact-item p,
+        .contact-item a {
+            font-size: 1rem;
+            color: var(--color-light-gray);
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .contact-item a:hover {
+            color: var(--color-white);
+            text-shadow: 0 0 8px var(--color-warm-glow);
+        }
+
+        .contacts-map {
+            height: 400px;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-dark-gray-2) 0%, var(--color-graphite) 100%);
+            border: 1px solid rgba(211, 211, 211, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-light-gray);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .contacts-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ============================================
+           Footer
+           ============================================ */
+
+        .footer {
+            padding: var(--spacing-md) 0;
+            background-color: var(--color-graphite);
+            border-top: 1px solid rgba(211, 211, 211, 0.1);
+            text-align: center;
+        }
+
+        .footer p {
+            color: var(--color-light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* ============================================
+           Animations & Effects
+           ============================================ */
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .fade-in:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .fade-in:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--color-success);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1002;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive Typography */
+        @media (max-width: 768px) {
+            .title-main {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+            
+            .title-sub {
+                font-size: 1.1rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .offer-title {
+                font-size: 1.8rem;
+            }
+            
+            .offer-description {
+                font-size: 1rem;
+            }
+            
+            .offers-slider {
+                height: 350px;
+            }
+            
+            .cart-dropdown {
+                width: 300px;
+                right: -50px;
+            }
+        }
+
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-graphite);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-dark-gray-2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-light-gray);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">Coffee Guest </div>
+            <ul class="nav-menu">
+                <li><a href="#hero">Головна</a></li>
+                <li><a href="#menu">Меню</a></li>
+                <li><a href="#offers">Пропозиції</a></li>
+                <li><a href="#about">Про нас</a></li>
+                <li><a href="#contacts">Контакти</a></li>
+            </ul>
+            <div class="cart-container">
+                <button class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+                <div class="cart-dropdown" id="cartDropdown">
+                    <div class="cart-header">
+                        <h3>Кошик</h3>
+                        <button class="close-cart" id="closeCart">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="cart-items" id="cartItems">
+                        <!-- Cart items will be added here dynamically -->
+                    </div>
+                    <div class="cart-footer">
+                        <div class="cart-total">
+                            <span>Загалом:</span>
+                            <span id="cartTotal">0 ₴</span>
+                        </div>
+                        <button class="checkout-btn" id="checkoutBtn">
+                            <i class="fas fa-credit-card"></i>
+                            Оформити замовлення
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Товар додано до кошика!</div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-background"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title fade-in">
+                <span class="title-main">Coffee Guest</span>
+                <span class="title-sub">— кав'ярня з історією</span>
+            </h1>
+            <p class="hero-subtitle fade-in">Автентичність. Якість. Гостинність.</p>
+            <div class="hero-buttons fade-in">
+                <a href="#menu" class="btn btn-primary">Меню</a>
+                <a href="#offers" class="btn btn-secondary">Спеціальні пропозиції</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- Unique Branded Animation -->
+    <section class="branded-animation-section">
+        <div class="animation-container">
+<!-- Change the SVG paths and text to move everything left by 20px (5% of 400px) -->
+<svg class="coffee-animation-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+    <!-- Coffee cup - moved left by 20px -->
+    <g class="coffee-cup">
+        <!-- Cup body --> 
+        <path d="M130 200 L130 320 Q130 360 180 360 L230 360 Q280 360 280 320 L280 200"
+            fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+        <!-- Cup rim -->
+        <path d="M130 200 L280 200" 
+            fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+        <!-- Handle -->
+        <path d="M280 220 Q310 220 310 250 Q310 280 280 280" 
+            fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    
+    <!-- Steam paths - moved left by 20px from already adjusted position -->
+    <path class="steam-line steam-1" d="M184 200 Q174 160 179 130 Q184 100 189 90" 
+          fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+    <path class="steam-line steam-2" d="M204 200 Q204 140 204 110 Q204 80 204 70" 
+          fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+    <path class="steam-line steam-3" d="M224 200 Q234 160 229 130 Q224 100 219 90" 
+          fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Text moved left by 20px -->
+    <text class="coffee-guest-text-steam" x="204" y="30" font-family="Inter, sans-serif" font-size="32" 
+        font-weight="300" fill="#FFFFFF" text-anchor="middle" opacity="0">COFFEE GUEST</text>
+</svg>
+
+<!-- Glow effect - Update offset to 44px (24px original + 20px for the 5% shift) -->
+<div class="animation-glow" style="--glow-offset: 44px;"></div>
+        </div>
+    </section>
+    
+    <!-- Menu Section -->
+    <section class="menu-section" id="menu">
+        <div class="container">
+            <h2 class="section-title">Наше меню</h2>
+            <div class="menu-tabs">
+                <button class="menu-tab active" data-category="coffee">Кава</button>
+                <button class="menu-tab" data-category="cold">Холодні напої</button>
+                <button class="menu-tab" data-category="desserts">Десерти</button>
+                <button class="menu-tab" data-category="breakfast">Сніданки / Сендвічі</button>
+                <button class="menu-tab" data-category="seasonal">Сезонні пропозиції</button>
+            </div>
+
+            <!-- Coffee Menu -->
+            <div class="menu-category active" data-menu="coffee">
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Еспресо</h3>
+                            <p class="menu-item-description">Класичний італійський еспресо</p>
+                            <span class="menu-item-price">42 ₴</span>
+                            <button class="add-to-cart-btn" data-id="1" data-name="Еспресо" data-price="42" data-image="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Американо</h3>
+                            <p class="menu-item-description">Еспресо з гарячою водою</p>
+                            <span class="menu-item-price">48 ₴</span>
+                            <button class="add-to-cart-btn" data-id="2" data-name="Американо" data-price="48" data-image="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Капучино</h3>
+                            <p class="menu-item-description">Еспресо з молоком та молочною піною</p>
+                            <span class="menu-item-price">62 ₴</span>
+                            <button class="add-to-cart-btn" data-id="3" data-name="Капучино" data-price="62" data-image="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Лате</h3>
+                            <p class="menu-item-description">Еспресо з молоком та м'якою піною</p>
+                            <span class="menu-item-price">68 ₴</span>
+                            <button class="add-to-cart-btn" data-id="4" data-name="Лате" data-price="68" data-image="https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1515823064-d6e0c04616a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Флет Вайт</h3>
+                            <p class="menu-item-description">Подвійний еспресо з мікро-піною</p>
+                            <span class="menu-item-price">72 ₴</span>
+                            <button class="add-to-cart-btn" data-id="5" data-name="Флет Вайт" data-price="72" data-image="https://images.unsplash.com/photo-1515823064-d6e0c04616a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Раф кава</h3>
+                            <p class="menu-item-description">Еспресо з вершками та ваніллю</p>
+                            <span class="menu-item-price">75 ₴</span>
+                            <button class="add-to-cart-btn" data-id="6" data-name="Раф кава" data-price="75" data-image="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cold Drinks Menu -->
+            <div class="menu-category" data-menu="cold">
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Айс Капучино</h3>
+                            <p class="menu-item-description">Холодний капучино з льодом</p>
+                            <span class="menu-item-price">70 ₴</span>
+                            <button class="add-to-cart-btn" data-id="7" data-name="Айс Капучино" data-price="70" data-image="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Айс Лате</h3>
+                            <p class="menu-item-description">Холодний лате з льодом</p>
+                            <span class="menu-item-price">75 ₴</span>
+                            <button class="add-to-cart-btn" data-id="8" data-name="Айс Лате" data-price="75" data-image="https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Фрапе</h3>
+                            <p class="menu-item-description">Освіжаючий кавовий напій</p>
+                            <span class="menu-item-price">80 ₴</span>
+                            <button class="add-to-cart-btn" data-id="9" data-name="Фрапе" data-price="80" data-image="https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Лимонад</h3>
+                            <p class="menu-item-description">Домашній лимонад з м'ятою</p>
+                            <span class="menu-item-price">55 ₴</span>
+                            <button class="add-to-cart-btn" data-id="10" data-name="Лимонад" data-price="55" data-image="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desserts Menu -->
+            <div class="menu-category" data-menu="desserts">
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Чізкейк</h3>
+                            <p class="menu-item-description">Класичний нью-йоркський чізкейк</p>
+                            <span class="menu-item-price">115 ₴</span>
+                            <button class="add-to-cart-btn" data-id="11" data-name="Чізкейк" data-price="115" data-image="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Тірамісу</h3>
+                            <p class="menu-item-description">Італійський десерт з кавою</p>
+                            <span class="menu-item-price">120 ₴</span>
+                            <button class="add-to-cart-btn" data-id="12" data-name="Тірамісу" data-price="120" data-image="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1606313564200-e75d5e30476c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Брауні</h3>
+                            <p class="menu-item-description">Шоколадний брауні з горіхами</p>
+                            <span class="menu-item-price">90 ₴</span>
+                            <button class="add-to-cart-btn" data-id="13" data-name="Брауні" data-price="90" data-image="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Маффін</h3>
+                            <p class="menu-item-description">Свіжоспечений маффін на вибір</p>
+                            <span class="menu-item-price">65 ₴</span>
+                            <button class="add-to-cart-btn" data-id="14" data-name="Маффін" data-price="65" data-image="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breakfast Menu -->
+            <div class="menu-category" data-menu="breakfast">
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Сендвіч з авокадо</h3>
+                            <p class="menu-item-description">Хліб, авокадо, яйце, рукола</p>
+                            <span class="menu-item-price">125 ₴</span>
+                            <button class="add-to-cart-btn" data-id="15" data-name="Сендвіч з авокадо" data-price="125" data-image="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1551782450-17144efb9c50?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Круасан з лососем</h3>
+                            <p class="menu-item-description">Свіжий круасан, лосось, крем-сир</p>
+                            <span class="menu-item-price">145 ₴</span>
+                            <button class="add-to-cart-btn" data-id="16" data-name="Круасан з лососем" data-price="145" data-image="https://images.unsplash.com/photo-1551782450-17144efb9c50?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1528735602780-2552fd46c7af?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Сендвіч з індичкою</h3>
+                            <p class="menu-item-description">Хліб, індичка, сир, овочі</p>
+                            <span class="menu-item-price">135 ₴</span>
+                            <button class="add-to-cart-btn" data-id="17" data-name="Сендвіч з індичкою" data-price="135" data-image="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1551782450-17144efb9c50?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Сніданок Coffee Guest</h3>
+                            <p class="menu-item-description">Яєчня, тости, овочі, кава</p>
+                            <span class="menu-item-price">175 ₴</span>
+                            <button class="add-to-cart-btn" data-id="18" data-name="Сніданок Coffee Guest" data-price="175" data-image="https://images.unsplash.com/photo-1551782450-17144efb9c50?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seasonal Menu -->
+            <div class="menu-category" data-menu="seasonal">
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Гарячий шоколад</h3>
+                            <p class="menu-item-description">Теплий шоколад з маршмелоу</p>
+                            <span class="menu-item-price">70 ₴</span>
+                            <button class="add-to-cart-btn" data-id="19" data-name="Гарячий шоколад" data-price="70" data-image="https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                    <div class="menu-card">
+                        <div class="menu-card-image" style="background-image: url('https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+                        <div class="menu-card-content">
+                            <h3 class="menu-item-name">Глінтвейн</h3>
+                            <p class="menu-item-description">Гарячий напій з прянощами</p>
+                            <span class="menu-item-price">85 ₴</span>
+                            <button class="add-to-cart-btn" data-id="20" data-name="Глінтвейн" data-price="85" data-image="https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80">
+                                <i class="fas fa-cart-plus"></i> Додати до кошика
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers Section -->
+    <section class="offers-section" id="offers">
+        <div class="container">
+            <h2 class="section-title">Спеціальні пропозиції</h2>
+            <div class="offers-slider">
+                <div class="offer-card active">
+                    <div class="offer-badge">Напій дня</div>
+                    <h3 class="offer-title">Капучино з кардамоном</h3>
+                    <p class="offer-description">Сьогодні особлива пропозиція — капучино з кардамоном за спеціальною ціною</p>
+                    <div class="offer-price">
+                        <span class="old-price">62 ₴</span>
+                        <span class="new-price">48 ₴</span>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-badge">Комбо</div>
+                    <h3 class="offer-title">Сніданок + Кава</h3>
+                    <p class="offer-description">Будь-який сніданок разом з кавою на ваш вибір</p>
+                    <div class="offer-price">
+                        <span class="new-price">210 ₴</span>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-badge">Сезонний</div>
+                    <h3 class="offer-title">Гарячий шоколад</h3>
+                    <p class="offer-description">Теплий затишок у чашці — спеціально для холодної пори</p>
+                    <div class="offer-price">
+                        <span class="new-price">70 ₴</span>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-badge">Лімітовано</div>
+                    <h3 class="offer-title">Домашні десерти</h3>
+                    <p class="offer-description">Щодня нові унікальні десерти від нашого кондитера</p>
+                    <div class="offer-price">
+                        <span class="new-price">Від 90 ₴</span>
+                    </div>
+                </div>
+            </div>
+            <div class="offers-nav">
+                <button class="offer-nav-btn prev" id="prevOffer">‹</button>
+                <div class="offer-dots">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
+                    <span class="dot" data-slide="3"></span>
+                </div>
+                <button class="offer-nav-btn next" id="nextOffer">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">Про кав'ярню</h2>
+                    <p class="about-description">
+                        <strong>"Coffee Guest"</strong> — це місце, де кожен відчуває себе як дорогий гість.
+                    </p>
+                    <p class="about-description">
+                        Наша кав'ярня була заснована з любов'ю до якісної кави та ідеї створення затишного простору, 
+                        де люди можуть зустрічатися, працювати або просто відпочивати за чашкою ароматного напою.
+                    </p>
+                    <p class="about-description">
+                        Ми ретельно відбираємо кавові зерна з найкращих плантацій світу та готуємо кожну 
+                        чашку з дбайливістю та увагою до деталей. Наші баристи пройшли професійне навчання 
+                        та знають секрети ідеального кавового напою.
+                    </p>
+                    <p class="about-description">
+                        У нашому меню ви знайдете не тільки класичні кавові напої, але й авторські рецепти, 
+                        сезонні пропозиції та смачні десерти, що готуються щодня.
+                    </p>
+                </div>
+                <div class="about-images">
+                    <div class="about-image"></div>
+                    <div class="about-image"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacts Section -->
+    <section class="contacts-section" id="contacts">
+        <div class="container">
+            <h2 class="section-title">Контакти</h2>
+            <div class="contacts-content">
+                <div class="contacts-info">
+                    <div class="contact-item">
+                        <h3>Адреса</h3>
+                        <p>Вул. 14-ї Князівської бригади 8а<br>Володимир, 44700</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Графік роботи</h3>
+                        <p>Понеділок - П'ятниця: 7:30 - 22:00<br>
+                        Субота - Неділя: 8:30 - 23:00</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Телефон</h3>
+                        <a href="tel:+380441234567">+38 (044) 123-45-67</a>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Instagram</h3>
+                        <a href="https://www.instagram.com/coffe_guest?igsh=eWVhZnFremtqazVm" target="_blank">@coffe_guest</a>
+                    </div>
+                    <a href="https://maps.app.goo.gl/o14W6qDrXRhWLjtd9?g_st=ipc" target="_blank" class="btn btn-primary">Прокласти маршрут</a>
+                </div>
+                <div class="contacts-map">
+                    <div class="map-placeholder">
+                        <p>Карта</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Coffee Guest — кав'ярня з історією. Всі права захищені.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // COFFEE GUEST — Shopping Cart Functionality
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initBrandedAnimation();
+            initNavigation();
+            initMenuTabs();
+            initOffersSlider();
+            initScrollAnimations();
+            initParallax();
+            initShoppingCart();
+        });
+
+        // ============================================
+        // Shopping Cart
+        // ============================================
+
+        function initShoppingCart() {
+            const cartIcon = document.getElementById('cartIcon');
+            const cartDropdown = document.getElementById('cartDropdown');
+            const closeCart = document.getElementById('closeCart');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartCount = document.querySelector('.cart-count');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            const toast = document.getElementById('toast');
+
+            let cart = [];
+
+            // Toggle cart dropdown
+            cartIcon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                cartDropdown.classList.toggle('active');
+            });
+
+            // Close cart dropdown
+            closeCart.addEventListener('click', function() {
+                cartDropdown.classList.remove('active');
+            });
+
+            // Close cart when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!cartDropdown.contains(e.target) && !cartIcon.contains(e.target)) {
+                    cartDropdown.classList.remove('active');
+                }
+            });
+
+            // Add to cart functionality
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    const price = parseInt(this.getAttribute('data-price'));
+                    const image = this.getAttribute('data-image');
+
+                    addToCart(id, name, price, image);
+                    showToast();
+                });
+            });
+
+            // Add item to cart
+            function addToCart(id, name, price, image) {
+                const existingItem = cart.find(item => item.id === id);
+
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        image,
+                        quantity: 1
+                    });
+                }
+
+                updateCart();
+            }
+
+            // Remove item from cart
+            function removeFromCart(id) {
+                cart = cart.filter(item => item.id !== id);
+                updateCart();
+            }
+
+            // Update quantity
+            function updateQuantity(id, change) {
+                const item = cart.find(item => item.id === id);
+                
+                if (item) {
+                    item.quantity += change;
+                    
+                    if (item.quantity <= 0) {
+                        removeFromCart(id);
+                    } else {
+                        updateCart();
+                    }
+                }
+            }
+
+            // Update cart UI
+            function updateCart() {
+                // Update cart items
+                cartItems.innerHTML = '';
+
+                if (cart.length === 0) {
+                    cartItems.innerHTML = `
+                        <div class="empty-cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <p>Кошик порожній</p>
+                        </div>
+                    `;
+                } else {
+                    cart.forEach(item => {
+                        const cartItem = document.createElement('div');
+                        cartItem.className = 'cart-item';
+                        cartItem.innerHTML = `
+                            <div class="cart-item-image" style="background-image: url('${item.image}')"></div>
+                            <div class="cart-item-details">
+                                <div class="cart-item-name">${item.name}</div>
+                                <div class="cart-item-price">${item.price} ₴</div>
+                            </div>
+                            <div class="cart-item-controls">
+                                <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                                <span class="cart-item-quantity">${item.quantity}</span>
+                                <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                                <button class="remove-item" data-id="${item.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                        cartItems.appendChild(cartItem);
+                    });
+
+                    // Add event listeners to quantity buttons
+                    document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const id = this.getAttribute('data-id');
+                            updateQuantity(id, -1);
+                        });
+                    });
+
+                    document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const id = this.getAttribute('data-id');
+                            updateQuantity(id, 1);
+                        });
+                    });
+
+                    // Add event listeners to remove buttons
+                    document.querySelectorAll('.remove-item').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const id = this.getAttribute('data-id');
+                            removeFromCart(id);
+                        });
+                    });
+                }
+
+                // Update total
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                cartTotal.textContent = `${total} ₴`;
+
+                // Update cart count
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCount.textContent = totalItems;
+            }
+
+            // Checkout functionality
+            checkoutBtn.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert('Кошик порожній! Додайте товари перед оформленням замовлення.');
+                    return;
+                }
+
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                alert(`Дякуємо за замовлення! Загальна сума: ${total} ₴\n\nНаш менеджер зв'яжеться з вами для підтвердження замовлення.`);
+                
+                // Clear cart after checkout
+                cart = [];
+                updateCart();
+                cartDropdown.classList.remove('active');
+            });
+
+            // Show toast notification
+            function showToast() {
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            // Initialize cart
+            updateCart();
+        }
+
+        // ============================================
+        // COFFEE GUEST — Unique Branded Animation
+        // Малювання чашки та дим, що перетворюється у "COFFEE GUEST"
+        // ============================================
+
+        function initBrandedAnimation() {
+            const animationSection = document.querySelector('.branded-animation-section');
+            if (!animationSection) return;
+
+            const coffeeCup = document.querySelector('.coffee-cup');
+            const steamLines = document.querySelectorAll('.steam-line');
+            const coffeeGuestText = document.querySelector('.coffee-guest-text-steam');
+
+            // Check if element is in viewport
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        startCupAnimation();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            observer.observe(animationSection);
+
+            function startCupAnimation() {
+                // Reset all elements - ensure they're ready
+                if (coffeeCup) {
+                    coffeeCup.style.opacity = '0';
+                    coffeeCup.style.transform = 'scale(0.8)';
+                }
+
+                // Reset steam lines
+                steamLines.forEach(line => {
+                    if (line) {
+                        line.style.opacity = '0';
+                    }
+                });
+
+                // Animate cup appearing
+                if (coffeeCup) {
+                    coffeeCup.animate([
+                        { opacity: 0, transform: 'scale(0.8)' },
+                        { opacity: 1, transform: 'scale(1)' }
+                    ], {
+                        duration: 1200,
+                        fill: 'forwards',
+                        easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+                    });
+                }
+
+                // Animate steam lines sequentially
+                setTimeout(() => {
+                    steamLines.forEach((line, index) => {
+                        if (line) {
+                            setTimeout(() => {
+                                animateSteamLine(line, index);
+                            }, index * 400);
+                        }
+                    });
+                }, 1200);
+
+                // Show COFFEE GUEST text after steam (after all steam lines are drawn)
+                setTimeout(() => {
+                    if (coffeeGuestText) {
+                        animateCoffeeGuestText(coffeeGuestText);
+                    }
+                }, 3000);
+            }
+
+            function animateSteamLine(line, index) {
+                if (!line) return;
+
+                // Animate steam rising
+                const animation = line.animate([
+                    { opacity: 0, transform: 'translateY(0)' },
+                    { opacity: 0.8, transform: 'translateY(-10px)' },
+                    { opacity: 0.4, transform: 'translateY(-20px)' },
+                    { opacity: 0, transform: 'translateY(-30px)' }
+                ], {
+                    duration: 2000,
+                    fill: 'forwards',
+                    easing: 'ease-out'
+                });
+
+                // Repeat steam animation
+                animation.onfinish = () => {
+                    line.style.opacity = '0';
+                    line.style.transform = 'translateY(0)';
+                    
+                    // Restart animation after a delay
+                    setTimeout(() => {
+                        animateSteamLine(line, index);
+                    }, 1000 + index * 500);
+                };
+            }
+
+            function animateCoffeeGuestText(text) {
+                if (!text) return;
+
+                const originalY = text.getAttribute('y');
+                text.setAttribute('opacity', '0');
+
+                // Animate text appearing from steam
+                const animation = text.animate([
+                    { 
+                        opacity: 0,
+                        y: parseFloat(originalY) + 30,
+                        filter: 'blur(10px)'
+                    },
+                    { 
+                        opacity: 1,
+                        y: originalY,
+                        filter: 'blur(0px)'
+                    }
+                ], {
+                    duration: 2000,
+                    fill: 'forwards',
+                    easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+                });
+
+                animation.onfinish = () => {
+                    text.setAttribute('opacity', '1');
+                    text.setAttribute('y', originalY);
+                    text.style.filter = 'drop-shadow(0 0 15px rgba(255, 235, 180, 0.9))';
+
+                    // Add subtle pulsing glow effect
+                    const pulseInterval = setInterval(() => {
+                        const time = Date.now() / 1000;
+                        const glow = 12 + Math.sin(time * 2) * 3;
+                        const opacity = 0.7 + Math.sin(time * 2) * 0.3;
+                        text.style.filter = `drop-shadow(0 0 ${glow}px rgba(255, 235, 180, ${opacity}))`;
+                    }, 50);
+
+                    // Stop pulsing after some time
+                    setTimeout(() => {
+                        clearInterval(pulseInterval);
+                    }, 30000);
+                };
+            }
+        }
+
+        // ============================================
+        // Navigation
+        // ============================================
+
+        function initNavigation() {
+            const navbar = document.getElementById('navbar');
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.querySelector('.nav-menu');
+            const navLinks = document.querySelectorAll('.nav-menu a');
+
+            // Scroll effect
+            let lastScroll = 0;
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+
+                if (currentScroll > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+
+                lastScroll = currentScroll;
+            });
+
+            // Mobile menu toggle
+            if (menuToggle) {
+                menuToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                });
+            }
+
+            // Close mobile menu on link click
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                });
+            });
+
+            // Smooth scroll for anchor links
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            const offsetTop = target.offsetTop - 80;
+                            window.scrollTo({
+                                top: offsetTop,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        }
+
+        // ============================================
+        // Menu Tabs
+        // ============================================
+
+        function initMenuTabs() {
+            const tabs = document.querySelectorAll('.menu-tab');
+            const categories = document.querySelectorAll('.menu-category');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const category = tab.getAttribute('data-category');
+
+                    // Remove active class from all tabs and categories
+                    tabs.forEach(t => t.classList.remove('active'));
+                    categories.forEach(c => c.classList.remove('active'));
+
+                    // Add active class to clicked tab and corresponding category
+                    tab.classList.add('active');
+                    const targetCategory = document.querySelector(`[data-menu="${category}"]`);
+                    if (targetCategory) {
+                        targetCategory.classList.add('active');
+
+                        // Animate menu cards
+                        const cards = targetCategory.querySelectorAll('.menu-card');
+                        cards.forEach((card, index) => {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.transition = 'all 0.5s ease-out';
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, index * 100);
+                        });
+                    }
+                });
+            });
+        }
+
+        // ============================================
+        // Offers Slider - IMPROVED ANIMATIONS
+        // ============================================
+
+        function initOffersSlider() {
+            const cards = document.querySelectorAll('.offer-card');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.getElementById('prevOffer');
+            const nextBtn = document.getElementById('nextOffer');
+            let currentSlide = 0;
+
+            if (cards.length === 0) return;
+
+            function showSlide(index) {
+                // Remove all classes from cards
+                cards.forEach(card => {
+                    card.classList.remove('active', 'previous', 'next');
+                });
+
+                // Update current slide
+                if (index >= cards.length) currentSlide = 0;
+                if (index < 0) currentSlide = cards.length - 1;
+
+                // Set classes for animation
+                cards[currentSlide].classList.add('active');
+                
+                // Set previous and next for smooth transitions
+                const prevIndex = currentSlide === 0 ? cards.length - 1 : currentSlide - 1;
+                const nextIndex = currentSlide === cards.length - 1 ? 0 : currentSlide + 1;
+                
+                cards[prevIndex].classList.add('previous');
+                cards[nextIndex].classList.add('next');
+
+                // Update dots
+                dots.forEach(dot => dot.classList.remove('active'));
+                if (dots[currentSlide]) {
+                    dots[currentSlide].classList.add('active');
+                }
+            }
+
+            function nextSlide() {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+
+            function prevSlide() {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', nextSlide);
+            }
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', prevSlide);
+            }
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    showSlide(currentSlide);
+                });
+            });
+
+            // Auto-play slider
+            setInterval(nextSlide, 5000);
+        }
+
+        // ============================================
+        // Scroll Animations
+        // ============================================
+
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all sections and cards
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'all 0.8s ease-out';
+                observer.observe(section);
+            });
+
+            const menuCards = document.querySelectorAll('.menu-card');
+            menuCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `all 0.5s ease-out ${index * 0.1}s`;
+                observer.observe(card);
+            });
+        }
+
+        // ============================================
+        // Parallax Effect
+        // ============================================
+
+        function initParallax() {
+            const heroBackground = document.querySelector('.hero-background');
+
+            if (!heroBackground) return;
+
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * 0.5;
+
+                if (scrolled < window.innerHeight) {
+                    heroBackground.style.transform = `translateY(${rate}px)`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
